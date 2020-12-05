@@ -1,0 +1,17 @@
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\CommChecker.exe.config
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\CommChecker.exe
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\CommChecker.pdb
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\obj\Debug\CommChecker.csprojAssemblyReference.cache
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\obj\Debug\CommChecker.csproj.CoreCompileInputs.cache
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\obj\Debug\CommChecker.exe
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\obj\Debug\CommChecker.pdb
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\SharpCompress.dll
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\System.Buffers.dll
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\System.Memory.dll
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\System.Buffers.xml
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\System.Memory.xml
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Itay Cohen\Desktop\Projects\CommmunicationChecker\CommChecker\obj\Debug\CommChecker.csproj.CopyComplete
