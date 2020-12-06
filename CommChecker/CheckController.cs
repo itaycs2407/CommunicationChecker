@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 public class CheckController
 {
@@ -25,7 +26,57 @@ public class CheckController
             {
                 copyCommentsFile();
             }
+            compileCPPFiles();
         }
+    }
+
+    private void compileCPPFiles()
+    {
+        List<string> cppFilesToCompile = collectAllCppFilesToCompile();
+        compile(cppFilesToCompile);
+    }
+
+    private void compile(List<string> i_CppFilesToCompile)
+    {
+        // initilize the process with the cl compiler
+        ProcessStartInfo psi = new ProcessStartInfo(@"cmd");
+        psi.UseShellExecute = false;
+        psi.CreateNoWindow = false;
+        psi.RedirectStandardInput = true;
+        var proc = Process.Start(psi);
+        StreamWriter writer = proc.StandardInput;
+        writer.WriteLine(@"cd C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\Tools");
+        writer.WriteLine("VsDevCmd.bat");
+
+        // start the compile process for each file
+
+        writer.WriteLine(@"cl C:\Users\itayco\Desktop\ITAY\client.cpp -o C:\Users\itayco\Desktop\ITAY\momo.exe");
+        Console.ReadLine();
+
+    }
+
+    private List<string> collectAllCppFilesToCompile()
+    {
+        List<string> cppFiles = new List<string>();
+        foreach (string directory in DirToOpen)
+        {
+            cppFiles.AddRange(collectCppFilesFromOneDirectory(directory));
+        }
+        return cppFiles;
+    }
+
+    private List<string> collectCppFilesFromOneDirectory(string i_Directory)
+    {
+        string[] filesInDir = Directory.GetFiles(i_Directory);
+        List<string> cppFiles = new List<string>();
+        foreach (string file in filesInDir)
+        {
+            if (Path.GetExtension(file).ToLower().Contains("cpp"))
+            {
+                cppFiles.Add(file);
+            }
+        }
+        return cppFiles;
     }
 
     private void copyCommentsFile()
