@@ -18,7 +18,7 @@ public class CheckController
 
     public void Run()
     {
-        getAllDirectories();
+        getAllDirectoriesWithDrilling();
         if (DirToOpen.Length > 0)
         {
             openCompressedFiles();
@@ -32,6 +32,7 @@ public class CheckController
 
     private void compileCPPFiles()
     {
+        getAllDirectoriesWithDrilling();
         List<string> cppFilesToCompile = collectAllCppFilesToCompile();
         compile(cppFilesToCompile);
     }
@@ -45,14 +46,18 @@ public class CheckController
         psi.RedirectStandardInput = true;
         var proc = Process.Start(psi);
         StreamWriter writer = proc.StandardInput;
-        writer.WriteLine(@"cd C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\Tools");
+    
+        writer.WriteLine(@"cd C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools");
         writer.WriteLine("VsDevCmd.bat");
 
         // start the compile process for each file
-
-        writer.WriteLine(@"cl C:\Users\itayco\Desktop\ITAY\client.cpp -o C:\Users\itayco\Desktop\ITAY\momo.exe");
-        Console.ReadLine();
-
+        foreach (string currentFile in i_CppFilesToCompile)
+        {
+            string filePath = Path.GetDirectoryName(currentFile);
+            writer.WriteLine(@"cd {0}", filePath);
+            string destinationFile = Path.GetFileName( currentFile);
+            writer.WriteLine(@"cl {0} ", destinationFile);
+        }
     }
 
     private List<string> collectAllCppFilesToCompile()
@@ -144,8 +149,9 @@ public class CheckController
         catch (Exception ignoredExp){}
     }
 
-    private void getAllDirectories()
+    private void getAllDirectoriesWithDrilling()
     {
-        this.DirToOpen = Directory.GetDirectories(this.workingPath);
+        this.DirToOpen = Directory.GetDirectories(this.workingPath,"*.*",SearchOption.AllDirectories);
     }
+
 }
