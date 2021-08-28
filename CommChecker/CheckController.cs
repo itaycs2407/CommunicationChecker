@@ -18,10 +18,25 @@ public class CheckController
 
     public void Run()
     {
-        getAllDirectoriesWithDrilling();
+        this.DirToOpen = getAllDirectoriesWithDrilling("");
         if (DirToOpen.Length > 0)
         {
-            openCompressedFiles();
+            foreach (string dir in this.DirToOpen)
+            {
+                Console.WriteLine("the sub directories for " + dir + "are :");
+                string[] sub = getAllDirectoriesWithDrilling(dir);
+                foreach (string subDir in sub)
+                {
+                    if (subDir.Contains(".ceg"))
+                    {
+                        Directory.Delete(subDir, true);
+                        Console.WriteLine(subDir);                            
+                    }
+                }
+                Console.WriteLine();
+            }
+
+            //openCompressedFiles();
            /* if (!string.IsNullOrEmpty(this.commentsFileName))
             {
                 copyCommentsFile();
@@ -32,7 +47,7 @@ public class CheckController
 
     private void compileCPPFiles()
     {
-        getAllDirectoriesWithDrilling();
+        getAllDirectoriesWithDrilling("");
         List<string> cppFilesToCompile = collectAllCppFilesToCompile();
         compile(cppFilesToCompile);
     }
@@ -147,11 +162,17 @@ public class CheckController
             Console.WriteLine($"extract file : ${i_File.FullName}");
         }
         catch (Exception ignoredExp){}
+
     }
 
-    private void getAllDirectoriesWithDrilling()
+    private string[] getAllDirectoriesWithDrilling(string i_Directory)
     {
-        this.DirToOpen = Directory.GetDirectories(this.workingPath,"*.*",SearchOption.AllDirectories);
+        if (string.IsNullOrEmpty(i_Directory))
+        {
+            i_Directory = this.workingPath;
+        }
+
+        return Directory.GetDirectories(i_Directory, "*.*",SearchOption.AllDirectories);
     }
 
 }
