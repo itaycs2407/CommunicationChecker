@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Linq;
 
 public class CheckController
 {
@@ -21,17 +22,35 @@ public class CheckController
         this.DirToOpen = getAllDirectoriesWithDrilling("");
         if (DirToOpen.Length > 0)
         {
-            foreach (string dir in this.DirToOpen)
-            {
-                //  Console.WriteLine("the sub directories for " + dir + "are :");
-                string[] subDirectories = getAllDirectoriesWithDrilling(dir);
-                deleteNotRelevantDirectoriesWithDateNames(dir, subDirectories);
-
-                // deleteDirectorisContainsName(sub, "ceg");
-            }
-
-            //compileCPPFiles();
+            // deleteDirectorisContainsName(subDirectories, "ceg");
+            // deleteNotRelevantDirectoriesWithDateNames(dir, subDirectories);
+            List<string> fileToCompile = getAllMainCppFileFromAllDirectories();
+            compile(fileToCompile);
         }
+    }
+
+    private List<string> getAllMainCppFileFromAllDirectories()
+    {
+        List<string> cppMainFilesPath = new List<string>();
+        foreach (string dir in this.DirToOpen)
+        {
+            string[] subDirectories = getAllDirectoriesWithDrilling(dir);
+            foreach (string studentWorkingDir in subDirectories)
+            {
+                List<string> filesInDirectory = Directory.GetFiles(studentWorkingDir).ToList();
+                foreach (string file in filesInDirectory)
+                {
+                    if (file.ToLower().Contains("main."))
+                    {
+                        cppMainFilesPath.Add(file.ToLower());
+                    }
+                }
+            }
+ 
+
+        }
+        
+        return cppMainFilesPath;
     }
 
     private void deleteNotRelevantDirectoriesWithDateNames(string i_Directory, string[] i_SubDirectories)
