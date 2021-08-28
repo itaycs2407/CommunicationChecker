@@ -23,26 +23,62 @@ public class CheckController
         {
             foreach (string dir in this.DirToOpen)
             {
-                Console.WriteLine("the sub directories for " + dir + "are :");
-                string[] sub = getAllDirectoriesWithDrilling(dir);
-                foreach (string subDir in sub)
-                {
-                    if (subDir.Contains(".ceg"))
-                    {
-                        Directory.Delete(subDir, true);
-                        Console.WriteLine(subDir);                            
-                    }
-                }
-                Console.WriteLine();
+                //  Console.WriteLine("the sub directories for " + dir + "are :");
+                string[] subDirectories = getAllDirectoriesWithDrilling(dir);
+                deleteNotRelevantDirectoriesWithDateNames(dir, subDirectories);
+
+                // deleteDirectorisContainsName(sub, "ceg");
             }
 
-            //openCompressedFiles();
-           /* if (!string.IsNullOrEmpty(this.commentsFileName))
-            {
-                copyCommentsFile();
-            }
-            compileCPPFiles();*/
+            //compileCPPFiles();
         }
+    }
+
+    private void deleteNotRelevantDirectoriesWithDateNames(string i_Directory, string[] i_SubDirectories)
+    {
+        List<DateTime> directoriesAsDates = new List<DateTime>();
+        foreach (string subDirectory in i_SubDirectories)
+        {
+            directoriesAsDates.Add(ConvertStrangeDateStringToDateTime(subDirectory.Remove(0, i_Directory.Length + 1)));
+        }
+        DateTime[] sortedDates = directoriesAsDates.ToArray();
+        Array.Sort(sortedDates);
+        string mostRelevant = sortedDates[sortedDates.Length - 1].ToString("yyyy-MM-dd-HH-mm-ss");
+        string mostRelevantPath = Path.Combine(i_Directory, mostRelevant);
+        foreach (string subDirectory in i_SubDirectories)
+        {
+            if (!(subDirectory.Equals(mostRelevantPath)))
+            {
+                Directory.Delete(subDirectory, true);
+            }
+        }
+    }
+
+    private static void deleteDirectorisContainsName(string[] i_Sub, string i_Name)
+    {
+        foreach (string subDir in i_Sub)
+        {
+            if (subDir.Contains(i_Name))
+            {
+                Directory.Delete(subDir, true);
+                Console.WriteLine(subDir);
+            }
+        }
+        Console.WriteLine();
+    }
+
+    public DateTime ConvertStrangeDateStringToDateTime(string i_RawDate)
+    {
+        //e.g, based on structure : "2021-08-14-23-29-21"
+        StringBuilder sb = new StringBuilder(i_RawDate);
+        sb[10] = ' ';
+        string[] dateParts = sb.ToString().Split(' ');
+        dateParts[0] = dateParts[0].Replace("-", "/");
+        dateParts[1] = dateParts[1].Replace("-", ":");
+
+        string newString = $"{dateParts[0]} {dateParts[1]}";
+
+        return Convert.ToDateTime(newString);
     }
 
     private void compileCPPFiles()
@@ -70,7 +106,7 @@ public class CheckController
         {
             string filePath = Path.GetDirectoryName(currentFile);
             writer.WriteLine(@"cd {0}", filePath);
-            string destinationFile = Path.GetFileName( currentFile);
+            string destinationFile = Path.GetFileName(currentFile);
             writer.WriteLine(@"cl {0} ", destinationFile);
         }
     }

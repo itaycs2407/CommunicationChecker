@@ -10,16 +10,22 @@ namespace CommChecker
     {
         static void Main(string[] args)
         {
-            
+
             Console.WriteLine("Enter working Directory : ");
             string workingDirectory = Console.ReadLine();
-//            Console.WriteLine("Enter comments filename : ");
+            Console.WriteLine("Enter comments filename : ");
             string commentFileName = "";// Console.ReadLine();
             CheckController cc = new CheckController(workingDirectory, commentFileName);
+            //CheckController cc = new CheckController("", "");
             cc.Run();
             Console.WriteLine("Program finished. Press any key....");
             Console.ReadLine();
-            
+
+            //string dateStr = "2021-08-14-23-29-21";
+            //DateTime dt = cc.ConvertStrangeDateStringToDateTime(dateStr);
+            //Console.WriteLine(dt);
+
+
            // GetInputMainMenu();
         }
 
