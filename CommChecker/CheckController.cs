@@ -40,14 +40,12 @@ public class CheckController
                 List<string> filesInDirectory = Directory.GetFiles(studentWorkingDir).ToList();
                 foreach (string file in filesInDirectory)
                 {
-                    if (file.ToLower().Contains("main."))
+                    if (file.ToLower().Contains("main.") || file.ToLower().Contains("source."))
                     {
                         cppMainFilesPath.Add(file.ToLower());
                     }
                 }
             }
- 
-
         }
         
         return cppMainFilesPath;
@@ -62,13 +60,16 @@ public class CheckController
         }
         DateTime[] sortedDates = directoriesAsDates.ToArray();
         Array.Sort(sortedDates);
-        string mostRelevant = sortedDates[sortedDates.Length - 1].ToString("yyyy-MM-dd-HH-mm-ss");
-        string mostRelevantPath = Path.Combine(i_Directory, mostRelevant);
-        foreach (string subDirectory in i_SubDirectories)
+        if (sortedDates.Length > 0)
         {
-            if (!(subDirectory.Equals(mostRelevantPath)))
+            string mostRelevant = sortedDates[sortedDates.Length - 1].ToString("yyyy-MM-dd-HH-mm-ss");
+            string mostRelevantPath = Path.Combine(i_Directory, mostRelevant);
+            foreach (string subDirectory in i_SubDirectories)
             {
-                Directory.Delete(subDirectory, true);
+                if (!(subDirectory.Equals(mostRelevantPath)))
+                {
+                    Directory.Delete(subDirectory, true);
+                }
             }
         }
     }
