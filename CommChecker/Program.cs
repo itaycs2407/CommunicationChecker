@@ -10,7 +10,7 @@ namespace CommChecker
     {
         static void Main(string[] args)
         {
-            /*
+            
             Console.WriteLine("Enter working Directory : ");
             string workingDirectory = Console.ReadLine();
             Console.WriteLine("Enter comments filename : ");
@@ -19,8 +19,8 @@ namespace CommChecker
             cc.Run();
             Console.WriteLine("Program finished. Press any key....");
             Console.ReadLine();
-            */
-            GetInputMainMenu();
+            
+           // GetInputMainMenu();
         }
 
         public static void GetInputMainMenu()

@@ -22,11 +22,11 @@ public class CheckController
         if (DirToOpen.Length > 0)
         {
             openCompressedFiles();
-            if (!string.IsNullOrEmpty(this.commentsFileName))
+           /* if (!string.IsNullOrEmpty(this.commentsFileName))
             {
                 copyCommentsFile();
             }
-            compileCPPFiles();
+            compileCPPFiles();*/
         }
     }
 
